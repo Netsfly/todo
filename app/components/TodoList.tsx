@@ -1,11 +1,10 @@
 // components/TodoList.tsx
 "use client";
 import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';  // Импортируем uuid для генерации уникальных ID
 import TodoItem from "./TodoItem";
 
 type Todo = {
-  id: string;  // id теперь строка
+  id: number;
   text: string;
   completed: boolean;
 };
@@ -16,12 +15,12 @@ export default function TodoList() {
 
   const addTodo = () => {
     if (input.trim()) {
-      setTodos([...todos, { id: uuidv4(), text: input, completed: false }]);  // Используем uuid для id
+      setTodos([...todos, { id: Date.now(), text: input, completed: false }]);
       setInput("");
     }
   };
 
-  const toggleComplete = (id: string) => {
+  const toggleComplete = (id: number) => {
     setTodos(
       todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -29,13 +28,13 @@ export default function TodoList() {
     );
   };
 
-  const removeTodo = (id: string) => {
+  const removeTodo = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Todo List</h1>
+    <div className="p-4 w-full max-w-xs mx-auto bg-purple-600 rounded-lg shadow-md">
+      <h1 className="text-2xl font-bold mb-4 text-white">Todo List</h1>
       <div className="flex mb-4">
         <input
           type="text"
